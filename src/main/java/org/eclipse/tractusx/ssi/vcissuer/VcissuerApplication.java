@@ -9,5 +9,4 @@ public class VcissuerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(VcissuerApplication.class, args);
 	}
-
 }

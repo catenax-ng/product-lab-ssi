@@ -4,8 +4,10 @@ name: Build
 on:
   push:
     branches: [ main, develop ]
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
   pull_request:
-    branches: [ main, develop ]
+    branches: [ '*' ]
   workflow_dispatch:
 
 jobs:
@@ -13,13 +15,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-      - name: Check whether secrets exist
-        if: github.ref == 'refs/heads/main'
-        id: secret-presence
-        run: |
-          [ ! -z "${{ secrets.CXNG_GHCR_PAT }}" ] && echo "::set-output name=CXNG_GHCR_PAT::true"
-          exit 0
 
       - uses: actions/checkout@v2
 
@@ -41,19 +36,3 @@ jobs:
           context: .
           push: false
           tags: username/repository:latest
-
-      - name: Login to GitHub Container Registry
-        if: github.ref == 'refs/heads/main'
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.CXNG_GHCR_PAT }}
-
-      - name: Build Docker image
-        if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/catenax-ng/product-vcissuer/vcissuer:latest

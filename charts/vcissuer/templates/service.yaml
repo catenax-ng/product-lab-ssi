@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "vsissuer.fullname" . }}
+  name: {{ include "vcissuer.fullname" . }}
   labels:
-    {{- include "vsissuer.labels" . | nindent 4 }}
+    {{- include "vcissuer.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "vsissuer.selectorLabels" . | nindent 4 }}
+    {{- include "vcissuer.selectorLabels" . | nindent 4 }}

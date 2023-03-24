@@ -11,6 +11,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      # see https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
+      packages: write
+
     steps:
       - uses: actions/checkout@v2
 

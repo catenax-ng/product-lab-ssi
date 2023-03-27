@@ -84,4 +84,3 @@ jobs:
             org.opencontainers.image.url=${{ github.event.repository.html_url }}
             org.opencontainers.image.documentation=${{ github.event.repository.html_url }}/blob/${{ github.ref }}/README.md
             org.opencontainers.image.authors=${{ github.event.repository.owner.login }}
-            org.opencontainers.image.vendor=${{ github.event.repository.owner.login }}

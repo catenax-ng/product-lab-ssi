@@ -6,16 +6,18 @@ on:
     types: [closed ]
     branches: [ main ]
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-#    permissions:
-#      # see https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
-#      id-token: read
-#      contents: write
-#      packages: write
+    permissions:
+      # see https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
+      contents: read
+      packages: write
 
     steps:
       - uses: actions/checkout@v2
@@ -53,20 +55,20 @@ jobs:
         run: mvn -B test --file pom.xml
 
       # DOCKER PUSH
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+      - name: Log in to the Container registry
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: set lower case owner name
-        run: |
-          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
-        env:
-          OWNER: '${{ github.repository_owner }}'
+          password: ${{ secrets.GITHUB_TOKEN }};
+#      - name: set lower case owner name
+#        run: |
+#          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+#        env:
+#          OWNER: '${{ github.repository_owner }}'
       - name: Build Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ env.OWNER_LC }}/product-vcissuer/vcissuer:latest,ghcr.io/${{ env.OWNER_LC }}/product-vcissuer/vcissuer:${{ env.RELEASE_VERSION }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.RELEASE_VERSION }}

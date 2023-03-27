@@ -13,6 +13,8 @@ jobs:
 
     permissions:
       # see https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
+      id-token: read
+      contents: write
       packages: write
 
     steps:

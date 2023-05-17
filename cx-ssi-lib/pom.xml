@@ -83,6 +83,14 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.eclipse.dash</groupId>
+                <artifactId>license-tool-plugin</artifactId>
+                <configuration>
+                    <summary>DEPENDENCIES</summary>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok-maven-plugin</artifactId>
                 <version>1.18.20.0</version>

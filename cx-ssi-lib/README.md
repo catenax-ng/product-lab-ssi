@@ -22,8 +22,8 @@
   <p align="center">
     This open source project has emerged with a goal to foster collaborative development and innovation in the area of Self-Sovereign Identity.
     <br />
-    <a href="https://github.com/catenax-ng/product-lab-ssi/tree/main/cx-ssi-lib/docs"><strong>Explore the docs »</strong></a>
-    <br />
+        <a href="https://github.com/catenax-ng/product-lab-ssi/tree/main/cx-ssi-lib/docs"><strong>Explore the docs »</strong></a>
+        <br />
     <br />
     <a href="https://github.com/catenax-ng/product-lab-ssi/issues">Report Bug</a>
     ·
@@ -97,10 +97,70 @@ By operating under the Eclipse Foundation, the project benefits from a robust ec
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+
+<!-- INSTALLATION -->
+## Installation
+
+To install and use this lib , you have two options: building from source or using the pre-built package from Maven Central Repository.
+
+### Build from Source
+
+To build the project from source, follow these steps:
+
+1. Clone the repository: 
+   ```
+   git clone https://github.com/catenax-ng/product-lab-ssi.git 
+   ```
+
+2. Navigate to the project directory:
+   ```
+   cd cx-ssi-lib 
+   ```
+
+3. Build the project using Maven:
+   ```
+   mvn clean install
+   ```
+
+4. After a successful build, you can include the generated JAR file in your project's dependencies.
+
+### Use Maven Dependency
+
+Alternatively, you can use the pre-built package available on Maven Central Repository by adding the following Maven dependency to your project's `pom.xml` file:
+
+```xml
+<dependency>
+  <groupId>org.eclipse.tractusx.ssi</groupId>
+  <artifactId>cx-ssi-agent-lib</artifactId>
+  <version>0.0.3</version>
+</dependency>
+```
+
+Make sure to update the version number if a newer version is available.
+
+Once you've added the dependency, your build tool (e.g., Maven or Gradle) will automatically download the library and include it in your project.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
 <!-- ROADMAP -->
 # Roadmap
 
-TBD
+Our roadmap for future development includes the following key milestones:
+
+1. **Enhanced DID Management**: We plan to further enhance the DID management functionality by adding support for additional DID methods and advanced features such as Using new methods for DID resolution and DID document updates.
+
+2. **Extended Cryptographic Operations**: We aim to expand the cryptographic operations offered by the library, including support for more signing algorithms, advanced key management features.
+
+3. **Credential Ecosystem**: We will focus on improving the credential management capabilities, including support for different credential formats, revocation mechanisms, and interoperability with existing credential ecosystems such as Verifiable Credentials.
+
+4. **Standard Compliance**: We are committed to ensuring compliance with emerging SSI-related standards and specifications. We will continuously update the project to align with evolving standards and ensure compatibility with other SSI tools and platforms.
+
+5. **Performance Optimization**: We will invest in optimizing the performance of the library, aiming to reduce computational overhead, improve efficiency, and provide better scalability for large-scale SSI agent deployments.
+
+6. **Comprehensive Documentation and Tutorials**: We will continue to improve the project's documentation, providing comprehensive guides, examples, and tutorials to assist developers in effectively utilizing the library's features and integrating it into their SSI agent projects.
+
+Please note that the roadmap is subject to change based on community feedback, emerging standards, and the evolving needs of the SSI ecosystem. We welcome contributions and suggestions from the community to help shape the future direction of the project.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -108,12 +168,32 @@ TBD
 <!-- CONTRIBUTING -->
 ## Contributing
 
+Contributions to this open-source project are welcome. If you would like to contribute, please follow these guidelines:
+
+1. Fork the project repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them with descriptive commit messages.
+4. Push your changes to your forked repository.
+5. Submit a pull request to the original project repository.
+
+Please ensure that you adhere to the project's coding style, write unit tests for your changes if applicable, and provide clear documentation for any new features or changes.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- LICENSE -->
 # License
-TBD
+
+This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for more information.
+
+```
+Apache License
+Version 2.0, January 2004
+http://www.apache.org/licenses/
+```
+
+You can freely use, modify, and distribute this project under the terms of the Apache License 2.0.
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -121,7 +201,12 @@ TBD
 <!-- CONTACT -->
 # Contact
 
-TBD
+If you have any questions, suggestions, or feedback regarding this project, please feel free to reach out to us. You can contact our team at:
+
+- Email: TBD! 
+- Issue Tracker:TBD! 
+
+We value your input and appreciate your interest in contributing to the project. Don't hesitate to contact us if you need any assistance or want to get involved.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

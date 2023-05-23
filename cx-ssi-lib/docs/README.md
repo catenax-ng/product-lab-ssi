@@ -4,7 +4,7 @@
 
 ## Installation
 
-To install and use the lib, you have two options: building from source or using the pre-built package from Maven Central Repository.
+To install and use the lib, you have two options: building from source or using the pre-built package from Maven Github Repository.
 
 ### Build from Source
 

@@ -168,13 +168,9 @@ Please note that the roadmap is subject to change based on community feedback, e
 <!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions to this open-source project are welcome. If you would like to contribute, please follow these guidelines:
+We are thrilled to have you here and excited about your interest in contributing to our project. Your contributions play a vital role in making our project successful and we truly appreciate your support.
 
-1. Fork the project repository.
-2. Create a new branch for your feature or bug fix.
-3. Make your changes and commit them with descriptive commit messages.
-4. Push your changes to your forked repository.
-5. Submit a pull request to the original project repository.
+To ensure a smooth and enjoyable experience for everyone involved, we have put together this guide to help you understand how you can contribute effectively. Please take a moment to read through the [CONTRIBUTING.md](CONTRIBUTING.md) before you start contributing.
 
 Please ensure that you adhere to the project's coding style, write unit tests for your changes if applicable, and provide clear documentation for any new features or changes.
 

@@ -1,202 +1,167 @@
 # Architecture
 
-**About arc42**
+**Documentation Template: arc42**
 
-arc42, the template for documentation of software and system
-architecture.
+arc42, the template for documentation of software and system architecture.
 
 Template Version 8.2 EN. (based upon AsciiDoc version), January 2023
 
-Created, maintained and © by Dr. Peter Hruschka, Dr. Gernot Starke and
-contributors. See <https://arc42.org>.
+Created, maintained and © by Dr. Peter Hruschka, Dr. Gernot Starke and contributors. See [arc42.org](https://arc42.org).
 
 ## Introduction and Goals
 
-The *SSI Agent Lib* (in the following referred to as **lib**) provides functions and concepts commonly required when implementing an digital wallet or other service that makes use of self-sovereign identites (SSI).
+The *SSI Agent Lib* (hereafter referred to as the **lib**) is an open-source Java library developed under the Catena-X project. It provides core functionalities and abstractions commonly required when implementing a digital wallet or any service leveraging self-sovereign identities (SSI).
 
 ### Requirements Overview
 
-The lib shall include features to support the following use cases and interactions:
+The lib supports the following use cases and interactions:
 
-| Feature                                    | Constraints                     | Details / Link                         |
-|--------------------------------------------|---------------------------------|----------------------------------------|
-| Create DID                                 |                                 | [link](FeatureSpec-CreateDid.md)       |
-| Parse DID                                  |                                 | [link](FeatureSpec-ParseDid.md)        |
-| Generate DID document                      |                                 | [link](FeatureSpec-GenerateDidDoc.md)  |
-| Resolve DID document                       |                                 | [link](FeatureSpec-ResolveDidDoc.md)   |
-| Create Verifiable Credential               | Limited to pre-defined schemas. | TBD                                    |
-| Create Proof for Verifiable Credential     |                                 | [link](FeatureSpec-CreateSignedVC.md)  |
-| Create Verifiable Presentation             |                                 | TBD                                    |
-| Verify Verifiable Presentation             |                                 | TBD                                    |
-| Validate Verifiable Presentation           |                                 | TBD                                    |
-| Generate a key pair                        | Only Ed25519 supported.         | [link](FeatureSpec-GenerateKeyPair.md)|
+| Feature                                    | Constraints                     | Details / Link                          |
+|--------------------------------------------|---------------------------------|-----------------------------------------|
+| Create DID                                 | - | [link](FeatureSpec-CreateDid.md)        |
+| Parse DID                                  | - | [link](FeatureSpec-ParseDid.md)         |
+| Generate DID document                      | - | [link](FeatureSpec-GenerateDidDoc.md)   |
+| Resolve DID document                       | - | [link](FeatureSpec-ResolveDidDoc.md)    |
+| Create Verifiable Credential               | Limited to pre-defined schemas | TBD                                     |
+| Create Proof for Verifiable Credential     | - | [link](FeatureSpec-CreateSignedVC.md)   |
+| Create Verifiable Presentation             | - | TBD                                     |
+| Verify Verifiable Presentation             | - | TBD                                     |
+| Validate Verifiable Presentation           | - | TBD                                     |
+| Generate a key pair                        | Only Ed25519 supported | [link](FeatureSpec-GenerateKeyPair.md)  |
 
 ### Quality Goals
 
-| Priority | Quality Goal  | Scenario                                                      |
-|----------|-------------- |---------------------------------------------------------------|
-| 1        | Flexibility   | Multiple algorithms have to be supported.                     |
-| 1        | Extensibility | Custom implementations can be integrated for certain aspects. |
-| 2        | Usability     | The lib can be used and integrated easily in other systems.   |
+| Priority | Quality Goal  | Scenario                                                                            |
+|----------|-------------- |-------------------------------------------------------------------------------------|
+| 1        | Flexibility   | Support for multiple cryptographic algorithms.                             |
+| 1        | Extensibility | Integration of custom implementations for certain aspects (e.g., DID resolution). |
+| 2        | Usability     | Seamless integration and usage within other systems.                         |
 
 ## Architecture Constraints
 
-**\<TDB>**
+- Java is the designated programming language to ensure compatibility with the "Managed Identity Wallet" and the Eclipse Dataspace Connector (EDC).
+- [JWT](https://www.w3.org/TR/vc-data-model/#json-web-token) based verifiable presentations are required for interoperability with the [DAPS](https://github.com/International-Data-Spaces-Association/IDS-G/tree/main/Components/IdentityProvider/DAPS), which uses JWT Access-Tokens for AuthN/AuthZ.
+- [JsonWebKeys2020](https://www.w3.org/community/reports/credentials/CG-FINAL-lds-jws2020-20220721/) serves as the Crypto Suite for Verifiable Credentials (VCs) & Verifiable Presentations (VPs).
 
 ## System Scope and Context
 
-**\<TDB>**
+![System Scope](images/SystemScope.png)
+
+The SSI Lib is intended for use by the Catena-X Managed Identity Wallet (MIW), the Eclipse Dataspace Connector (EDC), and third-party self-hosted wallets. While the SSI Lib provides did:web DID resolution capabilities, it also supports external DID resolution (e.g., Uniresolver).
 
 ## Solution Strategy
+
+The library adopts a stateless design with no data persistency. It offers segregated interfaces, allowing usage of both internal features and external components. For instance, internal and external
+
+DID resolution can be swapped (see `DidDocumentResolver.java`).
 
 ## Building Block View
 
 ### Whitebox Overall System
 
-***\<Overview Diagram>***
+![Whitebox System Overview](images/WhiteboxSystem.png)
 
-Motivation  
-*\<text explanation>*
+The library's building blocks are divided into various packages based on the provided SSI features, along with additional packages like `model` and `exception` for basic utilities.
 
-Contained Building Blocks  
-*\<Description of contained building block (black boxes)>*
+**Key Building Blocks**
 
-Important Interfaces  
-*\<Description of important interfaces>*
+- `resolver`
+- `jwt`
+- `model`
+- `proof`
+- `serialization`
+- `util`
+- `validation`
+- `exception`
+- `did`
+- `base`
+- `crypt`
 
-#### \<Name black box 1>
+**Crucial Interfaces**
 
-*\<Purpose/Responsibility>*
+- `DidDocumentResolver`
+- `LinkedDataProofGenerator`
+- `validateLdProofValidator`
+- `SignedJwtVerifier`
+- `SignedJwtFactory`
+- `JsonLdValidator`
 
-*\<Interface(s)>*
 
-*\<(Optional) Quality/Performance Characteristics>*
+#### resolver
 
-*\<(Optional) Directory/File Location>*
+This component is responsible for resolving Decentralized Identifiers (DIDs). It interacts with the underlying infrastructure to retrieve and parse DID Documents associated with a given DID.
 
-*\<(Optional) Fulfilled Requirements>*
+#### jwt
 
-*\<(optional) Open Issues/Problems/Risks>*
+The JWT (JSON Web Tokens) component is responsible for creating and verifying JWT-based verifiable presentations and credentials. It ensures the proper formatting and signing of JWTs.
 
-#### \<Name black box 2>
+#### model
 
-*\<black box template>*
+The model component contains the data structures and classes used across the library. It defines the main objects (like DID, Verifiable Credential, etc.) that the library operates on.
 
-#### \<Name black box n>
+#### proof
 
-*\<black box template>*
+This component deals with the creation and validation of Linked Data Proofs. It generates proofs for Verifiable Credentials and validates incoming proofs.
 
-#### \<Name interface 1>
+#### serialization
 
-…
+The serialization component converts between the library's internal data structures and the JSON-LD format used in SSI. It is essential for the import and export of SSI data.
 
-#### \<Name interface m>
+#### util
 
-### Level 2
+The util (or utility) component includes helper functions and classes used across the library. This may involve utility functions for encoding/decoding, date and time handling, etc.
 
-#### White Box *\<building block 1>*
+#### validation
 
-*\<white box template>*
+The validation component verifies that data is correctly formatted and valid according to the defined schemas and specifications. It is used in multiple contexts, such as when receiving Verifiable Credentials or Verifiable Presentations.
 
-#### White Box *\<building block 2>*
+#### exception
 
-*\<white box template>*
+The exception component defines the error and exception classes used in the library. It provides structured error handling and aids in debugging and error tracking.
 
-…
+#### did
 
-#### White Box *\<building block m>*
+The DID component involves all functionality specifically related to DIDs, such as generation, parsing, and formatting of DIDs and DID Documents.
 
-*\<white box template>*
+#### base
 
-### Level 3
+The base component includes fundamental functionality and classes used throughout the library, setting the base structure of the library.
 
-#### White Box \<\_building block x.1\_\>
+#### crypt
 
-*\<white box template>*
-
-#### White Box \<\_building block x.2\_\>
-
-*\<white box template>*
-
-#### White Box \<\_building block y.1\_\>
-
-*\<white box template>*
+The crypt (or cryptography) component is responsible for all cryptographic operations, like signing, verification, and key generation. It directly supports JsonWebKey2020 based operations.
 
 ## Runtime View
 
-### \<Runtime Scenario 1>
-
--   *\<insert runtime diagram or textual description of the scenario>*
-
--   *\<insert description of the notable aspects of the interactions
-    between the building block instances depicted in this diagram.>*
-
-### \<Runtime Scenario 2>
-
-### …
-
-### \<Runtime Scenario n>
+Refer to the respective Feature Specs for insights into the library's runtime behavior.
 
 ## Deployment View
 
-### Infrastructure Level 1
-
-***\<Overview Diagram>***
-
-Motivation  
-*\<explanation in text form>*
-
-Quality and/or Performance Features  
-*\<explanation in text form>*
-
-Mapping of Building Blocks to Infrastructure  
-*\<description of the mapping>*
-
-### Infrastructure Level 2
-
-#### *\<Infrastructure Element 1>*
-
-*\<diagram + explanation>*
-
-#### *\<Infrastructure Element 2>*
-
-*\<diagram + explanation>*
-
-…
-
-#### *\<Infrastructure Element n>*
-
-*\<diagram + explanation>*
+The SSI Lib can be integrated into an application as a standard JAR file through common build tools (i.e., Maven, Gradle, etc.). Therefore, no additional deployment artifacts are necessary.
 
 ## Cross-cutting Concepts
 
-### *\<Concept 1>*
+### Extensibility
+The architecture is designed to allow for the easy addition and integration of new features or alterations to existing ones. This is evident in the support for custom implementations (e.g., DID resolution) and the use of interfaces to allow flexibility in the underlying implementations.
 
-*\<explanation>*
-
-### *\<Concept 2>*
-
-*\<explanation>*
-
-…
-
-### *\<Concept n>*
-
-*\<explanation>*
+### Exception Handling
+Exception handling is a recurring concept in the architecture. The library has the exception building block, and other building blocks should follow consistent practices for error/exception handling to ensure robust operation.
 
 ## Architecture Decisions
 
 ## Quality Requirements
 
-### Quality Tree
-
-### Quality Scenarios
+- The library should create a JWT-based proof via JsonWebKey2020 / ED25519 signature within 0.5 seconds on current-generation server hardware under normal load (< 50% CPU Utilization)
 
 ## Risks and Technical Debts
 
+- Currently, only ED25519 is supported.
+- No formal interface exists for key encoding; it currently uses a byte array.
+
 ## Glossary
 
-| Term        | Definition        |
-|-------------|-------------------|
-| *\<Term-1>* | *\<definition-1>* |
-| *\<Term-2>* | *\<definition-2>* |
+| Term | Definition                         |
+|------|------------------------------------|
+| EDC  | Eclipse Dataspace Connector        |
+| MIW  | Managed Identity Wallet            |
+| SSI  | Self-Sovereign Identity            |

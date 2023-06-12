@@ -1,43 +1,49 @@
-# Feature: Create Signed Verifiable Credential
+# Feature: Issue Verifiable Presentation
 
 ## 1. Specification
 
-Given a JSON-LD, an issuer DID and a supported signature algorithm, generate a proof as specified in the [W3C VC-data-model, section 6.3.2](https://www.w3.org/TR/vc-data-model/#data-integrity-proofs) and return the signed verifiable credential.
+Given a verifiable credential, an issuer DID and an audience, return a verifiable presentation as a JWT.
 
-*Example:*
+*Example: JWT payload*
 ```json
 {
-  "@context": [
-    "https://www.w3.org/2018/credentials/v1",
-    "https://www.w3.org/2018/credentials/examples/v1"
-  ],
-  "id": "http://example.edu/credentials/1872",
-  "type": ["VerifiableCredential", "AlumniCredential"],
-  "issuer": "https://example.edu/issuers/565049",
-  "issuanceDate": "2010-01-01T19:23:24Z",
-  "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "alumniOf": {
-      "id": "did:example:c276e12ec21ebfeb1f712ebc6f1",
-      "name": [{
-        "value": "Example University",
-        "lang": "en"
-      }, {
-        "value": "Exemple d'Université",
-        "lang": "fr"
-      }]
+  "iss": "did:web:localhost%3A8080",
+  "sub": "did:web:localhost%3A8080",
+  "aud": "test",
+  "vp": {
+    "id": "did:web:localhost%3A8080#fd10a61d-3726-45e7-8355-db5f3a4dbe60",
+    "type": [
+      "VerifiablePresentation"
+    ],
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1"
+    ],
+    "verifiableCredential": {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1"
+      ],
+      "type": [
+        "VerifiableCredential"
+      ],
+      "id": "https://localhost:8080/12345",
+      "issuer": "did:web:localhost%3A8080",
+      "issuanceDate": "2023-05-26T13:58:00Z",
+      "expirationDate": "2000-01-23T04:56:07Z",
+      "credentialSubject": {
+        "name": "Jane Doe",
+        "id": "did:example:abcdef1234567"
+      },
+      "proof": {
+        "proofPurpose": "proofPurpose",
+        "type": "Ed25519Signature2020",
+        "proofValue": "zLLs4YXK4dhsaifJGmeyp23TsyUnGxJkobsT8fDgzXdq27dKFSgbXwvb857VyXRtBSLv2wBQbargrHJos93DreKT",
+        "verificationMethod": "did:web:localhost%3A8080#key-1",
+        "created": "2023-05-26T13:58:00Z"
+      }
     }
   },
-  "proof": {
-    "type": "RsaSignature2018",
-    "created": "2017-06-18T21:19:10Z",
-    "proofPurpose": "assertionMethod",
-    "verificationMethod": "https://example.edu/issuers/565049#key-1",
-    "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..TCYt5X
-      sITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUc
-      X16dUEMGlv50aqzpqh4Qktb3rk-BuQy72IFLOqV0G_zS245-kronKb78cPN25DGlcTwLtj
-      PAYuNzVBAh4vGHSrQyHUdBBPM"
-  }
+  "exp": 1686311279,
+  "jti": "89c16630-69ca-4b18-baa7-e93d3d3a016c"
 }
 ```
 

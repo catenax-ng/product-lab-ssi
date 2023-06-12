@@ -1,42 +1,14 @@
-# Feature: Generate DID Document
+# Feature: Verify Verifiable Presentation
 
 ## 1. Specification
 
-Given a valid DID, generate DID document as specified in [W3C-DID-Core](https://www.w3.org/TR/did-core/).
-
-*Example:*
-```json
-{
-  "@context": [
-    "https://www.w3.org/ns/did/v1",
-    "https://w3id.org/security/suites/jws-2020/v1",
-    "https://w3id.org/security/suites/ed25519-2020/v1"
-  ]
-  "id": "did:web:mydomain.com:12345",
-  "verificationMethod": [{
-    "id": "did:web:mydomain.com:12345#_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A",
-    "type": "JsonWebKey2020", 
-    "controller": "did:web:mydomain.com:12345",
-    "publicKeyJwk": {
-      "crv": "Ed25519", 
-      "x": "VCpo2LMLhn6iWku8MKvSLg2ZAoC-nlOyPVQaO3FxVeQ", 
-      "kty": "OKP", 
-      "kid": "_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A" 
-    }
-  }, {
-    "id": "did:example:123456789abcdefghi#keys-1",
-    "type": "Ed25519VerificationKey2020", 
-    "controller": "did:example:pqrstuvwxyz0987654321",
-    "publicKeyMultibase": "zH3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
-  }],
-}
-```
+Given a verifiable presentation, verify if the provided signatures are valid.
 
 #### 1.1 Assumptions
-Multiple verification methods *SHOULD* be supported.
+Multiple signature algorithms *SHOULD* be supported.
 
 #### 1.2 Constraints
-Currently only verification type **Ed25519VerificationKey2020** needs to be supported.
+Currently only verification types **Ed25519Signature2020** and **JsonWebKey2020** need to be supported.
 
 #### 1.3 System Environment
 *none*

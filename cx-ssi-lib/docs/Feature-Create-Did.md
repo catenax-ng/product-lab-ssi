@@ -20,13 +20,8 @@ Any kind of registration process of a DID is out of scope and needs to be handle
 
 ## 2. Architecture
 
-#### 2.1 Overview
-*Provide here a descriptive overview of the software/system/application architecture.*
+#### 2.1 Class Diagram
 
-#### 2.2 Component Diagrams
-*Provide here the diagram and a detailed description of its most valuable parts. There may be multiple diagrams. Include a description for each diagram. Subsections can be used to list components and their descriptions.*
-
-#### 2.3 Class Diagrams
 ![CreateParseDid.png](images/CreateParseDid.png)
 
 * DidFactory - Public factory interface.
@@ -38,5 +33,6 @@ Any kind of registration process of a DID is out of scope and needs to be handle
 * Did - Value class representing a DID. *MAY* refer to a **DidDocument**
 * DidDocument - Value class representing a DID document.
 
-#### 2.4 Sequence Diagrams
-*Provide here any sequence diagrams. If possible list the use case they contribute to or solve. Provide descriptions if possible.*
+
+
+

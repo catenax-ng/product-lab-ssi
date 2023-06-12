@@ -16,18 +16,17 @@ The *SSI Agent Lib* (hereafter referred to as the **lib**) is an open-source Jav
 
 The lib supports the following use cases and interactions:
 
-| Feature                                    | Constraints                     | Details / Link                          |
-|--------------------------------------------|---------------------------------|-----------------------------------------|
-| Create DID                                 | - | [link](FeatureSpec-CreateDid.md)        |
-| Parse DID                                  | - | [link](FeatureSpec-ParseDid.md)         |
-| Generate DID document                      | - | [link](FeatureSpec-GenerateDidDoc.md)   |
-| Resolve DID document                       | - | [link](FeatureSpec-ResolveDidDoc.md)    |
-| Create Verifiable Credential               | Limited to pre-defined schemas | TBD                                     |
-| Create Proof for Verifiable Credential     | - | [link](FeatureSpec-CreateSignedVC.md)   |
-| Create Verifiable Presentation             | - | TBD                                     |
-| Verify Verifiable Presentation             | - | TBD                                     |
-| Validate Verifiable Presentation           | - | TBD                                     |
-| Generate a key pair                        | Only Ed25519 supported | [link](FeatureSpec-GenerateKeyPair.md)  |
+| Feature                                                                         | Description / Constraints |
+| ------------------------------------------------------------------------------- | ------------------------- |
+| [Create DID](Feature-Create-Did.md)                                             |                           |
+| [Parse DID](Feature-Parse-Did.md)                                               |                           |
+| [Generate DID document](Feature-Generate-Did-Document.md)                       |                           |
+| [Resolve DID document](Feature-Resolve-Did-Document.md)                         |                           |
+| [Issue Verifiable Credential](Feature-Issue-Verifiable-Credential.md)           |                           |
+| [Issue Verifiable Presentation](Feature-Issue-Verifiable-Presentation.md)       |                           |
+| [Verify Verifiable Presentation](Feature-Verify-Verifiable-Presentation.md)     |                           |
+| [Validate Verifiable Presentation](Feature-Validate-Verifiable-Presentation.md) |                           |
+| [Generate a key pair](Feature-Generate-Key-Pair.md)                             | Only Ed25519 supported.   |
 
 ### Quality Goals
 
@@ -41,7 +40,7 @@ The lib supports the following use cases and interactions:
 
 - Java is the designated programming language to ensure compatibility with the "Managed Identity Wallet" and the Eclipse Dataspace Connector (EDC).
 - [JWT](https://www.w3.org/TR/vc-data-model/#json-web-token) based verifiable presentations are required for interoperability with the [DAPS](https://github.com/International-Data-Spaces-Association/IDS-G/tree/main/Components/IdentityProvider/DAPS), which uses JWT Access-Tokens for AuthN/AuthZ.
-- [JsonWebKeys2020](https://www.w3.org/community/reports/credentials/CG-FINAL-lds-jws2020-20220721/) serves as the Crypto Suite for Verifiable Credentials (VCs) & Verifiable Presentations (VPs).
+- [JsonWebKey2020](https://www.w3.org/community/reports/credentials/CG-FINAL-lds-jws2020-20220721/) serves as the Crypto Suite for Verifiable Credentials (VCs) & Verifiable Presentations (VPs).
 
 ## System Scope and Context
 

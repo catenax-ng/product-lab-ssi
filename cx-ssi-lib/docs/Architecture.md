@@ -3,14 +3,12 @@
 **Documentation Template: arc42**
 
 arc42, the template for documentation of software and system architecture.
-
 Template Version 8.2 EN. (based upon AsciiDoc version), January 2023
-
-Created, maintained and © by Dr. Peter Hruschka, Dr. Gernot Starke and contributors. See [arc42.org](https://arc42.org).
+See [arc42.org](https://arc42.org/license).
 
 ## Introduction and Goals
 
-The *SSI Agent Lib* (hereafter referred to as the **lib**) is an open-source Java library developed under the Catena-X project. It provides core functionalities and abstractions commonly required when implementing a digital wallet or any service leveraging self-sovereign identities (SSI).
+The *SSI Agent Lib* (hereafter referred to as the **lib**) is an open-source Java library developed under the Tractus-X project. It provides core functionalities and abstractions commonly required when implementing a digital wallet or any service leveraging self-sovereign identities (SSI).
 
 ### Requirements Overview
 
@@ -38,7 +36,7 @@ The lib supports the following use cases and interactions:
 
 ## Architecture Constraints
 
-- Java is the designated programming language to ensure compatibility with the "Managed Identity Wallet" and the Eclipse Dataspace Connector (EDC).
+- Java is the designated programming language to ensure compatibility with the Managed Identity Wallet and the [Tractus-X EDC](https://github.com/eclipse-tractusx/tractusx-edc).
 - [JWT](https://www.w3.org/TR/vc-data-model/#json-web-token) based verifiable presentations are required for interoperability with the [DAPS](https://github.com/International-Data-Spaces-Association/IDS-G/tree/main/Components/IdentityProvider/DAPS), which uses JWT Access-Tokens for AuthN/AuthZ.
 - [JsonWebKey2020](https://www.w3.org/community/reports/credentials/CG-FINAL-lds-jws2020-20220721/) serves as the Crypto Suite for Verifiable Credentials (VCs) & Verifiable Presentations (VPs).
 

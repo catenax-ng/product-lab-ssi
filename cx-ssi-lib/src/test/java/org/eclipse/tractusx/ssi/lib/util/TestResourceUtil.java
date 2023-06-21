@@ -21,13 +21,11 @@ package org.eclipse.tractusx.ssi.lib.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import lombok.SneakyThrows;
-import org.bouncycastle.util.io.pem.PemReader;
 import org.eclipse.tractusx.ssi.lib.model.did.Ed25519VerificationKey2020;
 import org.eclipse.tractusx.ssi.lib.util.identity.KeyResourceLoader;
 
@@ -35,8 +33,6 @@ public class TestResourceUtil {
 
   private static final ObjectMapper MAPPER = new ObjectMapper();
   private static final String DID_DOCUMENT_ED25519 = "did-document/document.ed25519.json";
-  private static final String PUBLIC_KEY_ED25519 = "keys/ed25519/public.pem";
-  private static final String PRIVATE_KEY_ED25519 = "keys/ed25519/private.pem";
   private static String VERIFIABLE_CREDENTIAL_ALUMNI =
       "verifiable-credential/alumni-credential.json";
   private static String VERIFIABLE_PRESENTATION_ALUMNI =
@@ -62,26 +58,10 @@ public class TestResourceUtil {
     throw new IllegalArgumentException("Unsupported verification key type: " + verificationKeyType);
   }
 
-  public static byte[] getPublicKeyEd25519() {
-    return readPemResource(PUBLIC_KEY_ED25519);
-  }
-
-  public static byte[] getPrivateKeyEd25519() {
-    return readPemResource(PRIVATE_KEY_ED25519);
-  }
-
   @SneakyThrows
   private static Map<String, Object> readJsonResource(String resource) {
     try (final InputStream inputStream = readResource(resource)) {
       return MAPPER.readValue(inputStream, Map.class);
-    }
-  }
-
-  @SneakyThrows
-  private static byte[] readPemResource(String resource) {
-    try (final InputStream inputStream = readResource(resource)) {
-      final PemReader reader = new PemReader(new InputStreamReader(inputStream));
-      return reader.readPemObject().getContent();
     }
   }
 

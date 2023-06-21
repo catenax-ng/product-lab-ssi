@@ -57,7 +57,7 @@ public class LinkedDataProofValidationComponentTest {
 
     this.didDocumentResolver = new TestDidDocumentResolver();
 
-    credentialIssuer = TestIdentityFactory.newIdentityWithED25519Keys(false);
+    credentialIssuer = TestIdentityFactory.newIdentityWithED25519Keys();
     didDocumentResolver.register(credentialIssuer);
 
     linkedDataProofValidation =

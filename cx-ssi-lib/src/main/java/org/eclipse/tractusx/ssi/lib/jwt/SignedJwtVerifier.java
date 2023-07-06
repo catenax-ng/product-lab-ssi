@@ -38,8 +38,8 @@ import org.eclipse.tractusx.ssi.lib.exception.JwtException;
 import org.eclipse.tractusx.ssi.lib.model.did.*;
 
 /**
- * Convenience/helper class to generate and verify Signed JSON Web Tokens (JWTs) for communicating
- * between connector instances.
+ * Convenience/helper class to verify Signed JSON Web Tokens (JWTs) for communicating between
+ * connector instances.
  */
 @RequiredArgsConstructor
 public class SignedJwtVerifier {

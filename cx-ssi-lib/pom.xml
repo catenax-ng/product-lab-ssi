@@ -313,7 +313,7 @@ SPDX-License-Identifier: Apache-2.0
         <!-- Eclipse Dash Tool to generate DEPENDENCIES file -->
         <pluginRepository>
             <id>dash-licenses-snapshots</id>
-            <url>https://repo.eclipse.org/content/repositories/dash-licenses-releases /</url>
+            <url>https://repo.eclipse.org/content/repositories/dash-licenses-releases/</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>

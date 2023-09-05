@@ -121,7 +121,7 @@ public class VerifiableCredential extends JsonLdObject {
 
   @NonNull
   public List<String> getTypes() {
-    return (List<String>) get(TYPE);
+    return SerializeUtil.asStringList(get(TYPE));
   }
 
   @NonNull

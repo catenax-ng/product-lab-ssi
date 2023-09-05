@@ -69,8 +69,10 @@ public class VerifiablePresentation extends JsonLdObject {
 
   @NonNull
   public List<VerifiableCredential> getVerifiableCredentials() {
+
     final List<Map<String, Object>> credentials =
-        (List<Map<String, Object>>) this.get(VERIFIABLE_CREDENTIAL);
+        SerializeUtil.asList(this.get(VERIFIABLE_CREDENTIAL));
+
     return credentials.stream().map(VerifiableCredential::new).collect(Collectors.toList());
   }
 }

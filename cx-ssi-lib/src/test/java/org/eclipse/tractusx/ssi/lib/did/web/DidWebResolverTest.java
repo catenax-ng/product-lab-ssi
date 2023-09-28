@@ -62,7 +62,7 @@ public class DidWebResolverTest {
   @Test
   public void shouldResolveValidWebDid()
       throws DidResolverException, IOException, InterruptedException, URISyntaxException {
-    Did validDidWeb = new Did(new DidMethod("web"), new DidMethodIdentifier("localhost"));
+    Did validDidWeb = new Did(new DidMethod("web"), new DidMethodIdentifier("localhost"), null);
     assertTrue(resolver.isResolvable(validDidWeb));
     when(httpClient.send(any(), any())).thenReturn(response);
     when(response.statusCode()).thenReturn(200);
@@ -78,7 +78,8 @@ public class DidWebResolverTest {
     Did validDidKey =
         new Did(
             new DidMethod("key"),
-            new DidMethodIdentifier("z6Mkfriq1MqLBoPWecGoDLjguo1sB9brj6wT3qZ5BxkKpuP6"));
+            new DidMethodIdentifier("z6Mkfriq1MqLBoPWecGoDLjguo1sB9brj6wT3qZ5BxkKpuP6"),
+            null);
     assertFalse(resolver.isResolvable(validDidKey));
     assertThrows(
         DidResolverException.class,

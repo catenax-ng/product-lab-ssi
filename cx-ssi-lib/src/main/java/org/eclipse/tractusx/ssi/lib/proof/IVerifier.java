@@ -23,11 +23,19 @@ import org.eclipse.tractusx.ssi.lib.exception.DidDocumentResolverNotRegisteredEx
 import org.eclipse.tractusx.ssi.lib.exception.InvalidePublicKeyFormat;
 import org.eclipse.tractusx.ssi.lib.exception.NoVerificationKeyFoundExcpetion;
 import org.eclipse.tractusx.ssi.lib.exception.UnsupportedSignatureTypeException;
+import org.eclipse.tractusx.ssi.lib.model.verifiable.Verifiable;
 import org.eclipse.tractusx.ssi.lib.model.verifiable.credential.VerifiableCredential;
 import org.eclipse.tractusx.ssi.lib.proof.hash.HashedLinkedData;
 
 public interface IVerifier {
-  public boolean verify(HashedLinkedData hashedLinkedData, VerifiableCredential credential)
+  /**
+   * {@link VerifiableCredential} verification method, This method depends on Issuer in VC data
+   * model to get the public key of issuer.
+   *
+   * @param hashedLinkedData
+   * @param document {@link VerifiableCredential}
+   */
+  public boolean verify(HashedLinkedData hashedLinkedData, Verifiable verifiable)
       throws UnsupportedSignatureTypeException, DidDocumentResolverNotRegisteredException,
           InvalidePublicKeyFormat, NoVerificationKeyFoundExcpetion;
 }

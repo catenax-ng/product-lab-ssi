@@ -32,7 +32,8 @@ public abstract class AbstractDidWebResolverTest {
   protected static Did VALID_DID_KEY =
       new Did(
           new DidMethod("key"),
-          new DidMethodIdentifier("z6Mkfriq1MqLBoPWecGoDLjguo1sB9brj6wT3qZ5BxkKpuP6"));
+          new DidMethodIdentifier("z6Mkfriq1MqLBoPWecGoDLjguo1sB9brj6wT3qZ5BxkKpuP6"),
+          null);
 
   public AbstractDidWebResolverTest(Did validDidWeb) {
     this.validDidWeb = validDidWeb;

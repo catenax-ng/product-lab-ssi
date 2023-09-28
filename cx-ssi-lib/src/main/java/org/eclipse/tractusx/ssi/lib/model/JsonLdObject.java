@@ -51,26 +51,10 @@ public abstract class JsonLdObject extends HashMap<String, Object> {
       }
       this.put(CONTEXT, contexts);
 
-      if (documentLoader == null) {}
-
     } catch (Exception e) {
       throw new IllegalArgumentException(
           String.format("Invalid JsonLdObject: %s", SerializeUtil.toJson(json)), e);
     }
-  }
-
-  public JsonLdObject(Map<String, Object> json, DocumentLoader documentLoader) {
-    super(json);
-
-    try {
-      // validate getters
-      Objects.requireNonNull(this.getContext());
-    } catch (Exception e) {
-      throw new IllegalArgumentException(
-          String.format("Invalid JsonLdObject: %s", SerializeUtil.toJson(json)), e);
-    }
-
-    this.documentLoader = documentLoader;
   }
 
   public List<URI> getContext() {

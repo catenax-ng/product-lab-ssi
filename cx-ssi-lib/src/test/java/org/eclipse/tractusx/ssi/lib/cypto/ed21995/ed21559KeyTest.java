@@ -31,16 +31,12 @@ public class ed21559KeyTest {
     IKeyGenerator keyGenerator = new x21559Generator();
     KeyPair keyPair = keyGenerator.generateKey();
 
-    printTestData(keyPair.getPrivateKey().asStringForStoring());
     assertNotNull(keyPair.getPrivateKey().asStringForStoring());
 
-    printTestData(keyPair.getPrivateKey().asStringForExchange(EncodeType.Base64));
     assertNotNull(keyPair.getPrivateKey().asStringForExchange(EncodeType.Base64));
 
-    printTestData(keyPair.getPublicKey().asStringForStoring());
     assertNotNull(keyPair.getPublicKey().asStringForStoring());
 
-    printTestData(keyPair.getPublicKey().asStringForExchange(EncodeType.Base64));
     assertNotNull(keyPair.getPublicKey().asStringForExchange(EncodeType.Base64));
   }
 
@@ -60,17 +56,8 @@ public class ed21559KeyTest {
     String publicKeyString = keyPair.getPublicKey().asStringForStoring();
     var publicKey = new x21559PublicKey(publicKeyString, true);
 
-    printTestData(keyPair.getPrivateKey().asStringForExchange(EncodeType.Base64));
-    printTestData(privateKey.asStringForExchange(EncodeType.Base64));
-
     assertTrue(Arrays.equals(originalPrivateKey, privateKey.asByte()));
 
-    printTestData(keyPair.getPublicKey().asStringForExchange(EncodeType.Base58));
-    printTestData(publicKey.asStringForExchange(EncodeType.Base58));
     assertTrue(Arrays.equals(originalPublicKey, publicKey.asByte()));
-  }
-
-  private static void printTestData(String str) {
-    System.out.println(str);
   }
 }

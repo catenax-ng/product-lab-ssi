@@ -122,6 +122,12 @@ public final class SerializeUtil {
     throw new IllegalArgumentException("Unsupported type: " + object.getClass());
   }
 
+  public static List asList(Object object) {
+    if (object instanceof List) {
+      return (List) object;
+    } else return List.of(object);
+  }
+
   private static Map<String, Object> getLinkedHashMap(Map<String, Object> map) {
     // convert Map to LinkedHashMap to preserve property order
     Class<? extends Map> aClass = map.getClass();

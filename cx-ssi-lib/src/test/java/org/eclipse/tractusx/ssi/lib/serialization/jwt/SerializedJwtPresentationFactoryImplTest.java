@@ -14,12 +14,12 @@ import org.eclipse.tractusx.ssi.lib.proof.LinkedDataProofGenerator;
 import org.eclipse.tractusx.ssi.lib.proof.SignatureType;
 import org.eclipse.tractusx.ssi.lib.proof.hash.LinkedDataHasher;
 import org.eclipse.tractusx.ssi.lib.proof.transform.LinkedDataTransformer;
-import org.eclipse.tractusx.ssi.lib.proof.types.ed25519.ED21559ProofSigner;
+import org.eclipse.tractusx.ssi.lib.proof.types.ed25519.Ed25519ProofSigner;
 import org.eclipse.tractusx.ssi.lib.serialization.jsonLd.JsonLdSerializerImpl;
 import org.eclipse.tractusx.ssi.lib.util.identity.TestDidResolver;
 import org.eclipse.tractusx.ssi.lib.util.identity.TestIdentity;
 import org.eclipse.tractusx.ssi.lib.util.identity.TestIdentityFactory;
-import org.eclipse.tractusx.ssi.lib.util.vc.TestCredentialFactory;
+import org.eclipse.tractusx.ssi.lib.util.vc.TestVerifiableFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -47,21 +47,21 @@ class SerializedJwtPresentationFactoryImplTest {
             SignatureType.JWS,
             new LinkedDataHasher(),
             new LinkedDataTransformer(),
-            new ED21559ProofSigner());
+            new Ed25519ProofSigner());
 
     // prepare key
     final URI verificationMethod =
         credentialIssuer.getDidDocument().getVerificationMethods().get(0).getId();
 
     final VerifiableCredential credential =
-        TestCredentialFactory.createCredential(credentialIssuer, null);
+        TestVerifiableFactory.createVerifiableCredential(credentialIssuer, null);
 
     final Proof proof =
         linkedDataProofGenerator.createProof(
             credential, verificationMethod, credentialIssuer.getPrivateKey());
 
     final VerifiableCredential credentialWithProof =
-        TestCredentialFactory.createCredential(credentialIssuer, proof);
+        TestVerifiableFactory.createVerifiableCredential(credentialIssuer, proof);
 
     SerializedJwtPresentationFactory presentationFactory =
         new SerializedJwtPresentationFactoryImpl(

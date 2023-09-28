@@ -22,8 +22,12 @@ package org.eclipse.tractusx.ssi.examples;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import org.eclipse.tractusx.ssi.lib.crypt.ed25519.Ed25519KeySet;
+import org.eclipse.tractusx.ssi.lib.crypt.IKeyGenerator;
+import org.eclipse.tractusx.ssi.lib.crypt.IPublicKey;
+import org.eclipse.tractusx.ssi.lib.crypt.KeyPair;
+import org.eclipse.tractusx.ssi.lib.crypt.x21559.x21559Generator;
 import org.eclipse.tractusx.ssi.lib.did.web.DidWebFactory;
+import org.eclipse.tractusx.ssi.lib.exception.KeyGenerationException;
 import org.eclipse.tractusx.ssi.lib.model.MultibaseString;
 import org.eclipse.tractusx.ssi.lib.model.base.MultibaseFactory;
 import org.eclipse.tractusx.ssi.lib.model.did.Did;
@@ -34,12 +38,16 @@ import org.eclipse.tractusx.ssi.lib.model.did.Ed25519VerificationMethodBuilder;
 import org.eclipse.tractusx.ssi.lib.model.did.VerificationMethod;
 
 public class BuildDIDDocEd25519VerificationKey2020 {
-  public static DidDocument buildDidDocument(String hostName, byte[] privateKey, byte[] publicKey) {
+  public static DidDocument buildDidDocument(String hostName) throws KeyGenerationException {
     final Did did = DidWebFactory.fromHostname(hostName);
 
     // Extracting keys
-    final Ed25519KeySet keySet = new Ed25519KeySet(privateKey, publicKey);
-    final MultibaseString publicKeyBase = MultibaseFactory.create(keySet.getPublicKey());
+    // final Ed25519KeySet keySet = new Ed25519KeySet(privateKey, publicKey);
+    IKeyGenerator keyGenerator = new x21559Generator();
+    KeyPair keyPair = keyGenerator.generateKey();
+    IPublicKey publicKey = keyPair.getPublicKey();
+
+    final MultibaseString publicKeyBase = MultibaseFactory.create(publicKey.asByte());
 
     // Building Verification Methods:
     final List<VerificationMethod> verificationMethods = new ArrayList<>();

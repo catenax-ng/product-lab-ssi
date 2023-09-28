@@ -34,20 +34,25 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.security.NoSuchAlgorithmException;
 import lombok.SneakyThrows;
-import org.eclipse.tractusx.ssi.lib.model.JsonLdObject;
+import org.apache.commons.lang3.SerializationUtils;
 import org.eclipse.tractusx.ssi.lib.web.RemoteDocumentLoader;
-import org.eclipse.tractusx.ssi.lib.model.verifiable.credential.VerifiableCredential;
+import org.eclipse.tractusx.ssi.lib.model.JsonLdObject;
+import org.eclipse.tractusx.ssi.lib.model.verifiable.Verifiable;
 
 public class LinkedDataTransformer {
-  @SneakyThrows
-  public TransformedLinkedData transform(VerifiableCredential credential) {
-    // make a copy and remove proof from credential, as it is not part of the linked data
-    VerifiableCredential copyCredential = new VerifiableCredential(credential);
-    copyCredential.remove(VerifiableCredential.PROOF);
 
+  @SneakyThrows
+  public TransformedLinkedData transform(Verifiable document) {
+    // Make a copy and remove proof, as it is not part of the linked data
+    var copy = (JsonLdObject) SerializationUtils.clone(document);
+    copy.remove(Verifiable.PROOF);
+    return this.canocliztion(copy);
+  }
+
+  private TransformedLinkedData canocliztion(JsonLdObject document) {
     try {
 
-      RdfDataset rdfDataset = toDataset(copyCredential);
+      RdfDataset rdfDataset = toDataset(document);
       rdfDataset = RdfNormalize.normalize(rdfDataset, "urdna2015");
       StringWriter stringWriter = new StringWriter();
       NQuadsWriter nQuadsWriter = new NQuadsWriter(stringWriter);

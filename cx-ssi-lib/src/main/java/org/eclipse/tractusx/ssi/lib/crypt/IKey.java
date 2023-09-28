@@ -4,6 +4,7 @@ import java.io.IOException;
 import org.eclipse.tractusx.ssi.lib.model.base.EncodeType;
 
 public interface IKey {
+  // TODO add docs
   int getKeyLength();
 
   String asStringForStoring() throws IOException;

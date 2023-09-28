@@ -26,40 +26,27 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.NonNull;
 import lombok.ToString;
-import org.eclipse.tractusx.ssi.lib.model.JsonLdObject;
+import org.eclipse.tractusx.ssi.lib.model.verifiable.Verifiable;
 import org.eclipse.tractusx.ssi.lib.model.verifiable.credential.VerifiableCredential;
 import org.eclipse.tractusx.ssi.lib.serialization.SerializeUtil;
 
 @ToString(callSuper = true)
-public class VerifiablePresentation extends JsonLdObject {
+public class VerifiablePresentation extends Verifiable {
   public static final URI DEFAULT_CONTEXT = URI.create("https://www.w3.org/2018/credentials/v1");
 
-  public static final String ID = "id";
-  public static final String TYPE = "type";
   public static final String VERIFIABLE_CREDENTIAL = "verifiableCredential";
 
   public VerifiablePresentation(Map<String, Object> json) {
-    super(json);
+    super(json, VerifiableType.VP);
 
     try {
       // validate getters
-      Objects.requireNonNull(this.getId(), "id s null");
       Objects.requireNonNull(this.getTypes(), "context is null");
       Objects.requireNonNull(this.getVerifiableCredentials(), "VCs is null");
     } catch (Exception e) {
       throw new IllegalArgumentException(
           String.format("Invalid VerifiablePresentation: %s", SerializeUtil.toJson(json)), e);
     }
-  }
-
-  @NonNull
-  public URI getId() {
-    return SerializeUtil.asURI(this.get(ID));
-  }
-
-  @NonNull
-  public List<String> getTypes() {
-    return SerializeUtil.asStringList(this.get(TYPE));
   }
 
   public static VerifiablePresentation fromJson(String json) {
@@ -69,8 +56,10 @@ public class VerifiablePresentation extends JsonLdObject {
 
   @NonNull
   public List<VerifiableCredential> getVerifiableCredentials() {
+
     final List<Map<String, Object>> credentials =
-        (List<Map<String, Object>>) this.get(VERIFIABLE_CREDENTIAL);
+        SerializeUtil.asList(this.get(VERIFIABLE_CREDENTIAL));
+
     return credentials.stream().map(VerifiableCredential::new).collect(Collectors.toList());
   }
 }

@@ -75,7 +75,8 @@ public class DidUniResolverIT {
     Did validDidWeb =
         new Did(
             new DidMethod("key"),
-            new DidMethodIdentifier("z6Mkfriq1MqLBoPWecGoDLjguo1sB9brj6wT3qZ5BxkKpuP6"));
+            new DidMethodIdentifier("z6Mkfriq1MqLBoPWecGoDLjguo1sB9brj6wT3qZ5BxkKpuP6"),
+            null);
     assertTrue(resolver.isResolvable(validDidWeb));
     DidDocument actualDidDoc = resolver.resolve(validDidWeb);
     assertNotNull(actualDidDoc);

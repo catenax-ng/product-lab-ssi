@@ -50,7 +50,7 @@ public class CompositeDidResolverTest {
   private static final DidDocument RESOLVED_DID_DOC =
       new DidDocument(TestResourceUtil.getPublishedDidDocument());
   private static final Did DID =
-      new Did(new DidMethod("web"), new DidMethodIdentifier("localhost"));
+      new Did(new DidMethod("web"), new DidMethodIdentifier("localhost"), null);
 
   @BeforeEach
   public void resetMocks() {

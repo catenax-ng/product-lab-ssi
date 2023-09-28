@@ -38,3 +38,6 @@ cx-ssi-lib/src/test/.DS_Store
 cx-ssi-lib/src/test/resources/.DS_Store
 cx-ssi-lib/src/test/resources/keys/.DS_Store
 .DS_Store
+
+### Emcas  ###
+cx-ssi-lib/~/.local/

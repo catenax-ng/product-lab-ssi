@@ -30,11 +30,12 @@ import org.eclipse.tractusx.ssi.lib.model.did.DidMethod;
  */
 public class DidDocumentResolverRegistryImpl implements DidDocumentResolverRegistry {
 
-  private final Map<DidMethod, DidDocumentResolver> resolvers = new HashMap<>();
+  public final Map<DidMethod, DidDocumentResolver> resolvers = new HashMap<>();
 
   @Override
   public DidDocumentResolver get(DidMethod didMethod)
       throws DidDocumentResolverNotRegisteredException {
+
     if (!resolvers.containsKey(didMethod))
       throw new DidDocumentResolverNotRegisteredException(didMethod);
 

@@ -34,12 +34,12 @@ import org.eclipse.tractusx.ssi.lib.model.proof.ed21559.Ed25519Signature2020;
 import org.eclipse.tractusx.ssi.lib.model.proof.ed21559.Ed25519Signature2020Builder;
 import org.eclipse.tractusx.ssi.lib.model.proof.jws.JWSSignature2020;
 import org.eclipse.tractusx.ssi.lib.model.proof.jws.JWSSignature2020Builder;
-import org.eclipse.tractusx.ssi.lib.model.verifiable.credential.VerifiableCredential;
+import org.eclipse.tractusx.ssi.lib.model.verifiable.Verifiable;
 import org.eclipse.tractusx.ssi.lib.proof.hash.HashedLinkedData;
 import org.eclipse.tractusx.ssi.lib.proof.hash.LinkedDataHasher;
 import org.eclipse.tractusx.ssi.lib.proof.transform.LinkedDataTransformer;
 import org.eclipse.tractusx.ssi.lib.proof.transform.TransformedLinkedData;
-import org.eclipse.tractusx.ssi.lib.proof.types.ed25519.ED21559ProofSigner;
+import org.eclipse.tractusx.ssi.lib.proof.types.ed25519.Ed25519ProofSigner;
 import org.eclipse.tractusx.ssi.lib.proof.types.jws.JWSProofSigner;
 
 @RequiredArgsConstructor
@@ -49,7 +49,7 @@ public class LinkedDataProofGenerator {
       throws UnsupportedSignatureTypeException {
     if (type == SignatureType.ED21559) {
       return new LinkedDataProofGenerator(
-          type, new LinkedDataHasher(), new LinkedDataTransformer(), new ED21559ProofSigner());
+          type, new LinkedDataHasher(), new LinkedDataTransformer(), new Ed25519ProofSigner());
     } else if (type == SignatureType.JWS) {
       return new LinkedDataProofGenerator(
           type, new LinkedDataHasher(), new LinkedDataTransformer(), new JWSProofSigner());
@@ -63,11 +63,10 @@ public class LinkedDataProofGenerator {
   private final LinkedDataTransformer transformer;
   private final ISigner signer;
 
-  public Proof createProof(
-      VerifiableCredential verifiableCredential, URI verificationMethodId, IPrivateKey privateKey)
+  public Proof createProof(Verifiable document, URI verificationMethodId, IPrivateKey privateKey)
       throws SsiException, InvalidePrivateKeyFormat {
 
-    final TransformedLinkedData transformedData = transformer.transform(verifiableCredential);
+    final TransformedLinkedData transformedData = transformer.transform(document);
     final HashedLinkedData hashedData = hasher.hash(transformedData);
     byte[] signature;
     signature = signer.sign(new HashedLinkedData(hashedData.getValue()), privateKey);

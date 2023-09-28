@@ -42,7 +42,7 @@ public class DidWebParserTest {
   })
   public void testResolveUriFromDid(String methodIdentifier, String expectedUri) {
 
-    final Did did = new Did(new DidMethod("web"), new DidMethodIdentifier(methodIdentifier));
+    final Did did = new Did(new DidMethod("web"), new DidMethodIdentifier(methodIdentifier), null);
     final URI uri = parser.parse(did);
 
     Assertions.assertEquals(expectedUri, uri.toString(), "Could not resolve URI from DID" + did);

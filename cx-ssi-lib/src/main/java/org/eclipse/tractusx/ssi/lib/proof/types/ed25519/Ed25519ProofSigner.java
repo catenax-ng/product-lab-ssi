@@ -26,7 +26,7 @@ import org.eclipse.tractusx.ssi.lib.exception.SsiException;
 import org.eclipse.tractusx.ssi.lib.proof.ISigner;
 import org.eclipse.tractusx.ssi.lib.proof.hash.HashedLinkedData;
 
-public class ED21559ProofSigner implements ISigner {
+public class Ed25519ProofSigner implements ISigner {
 
   @Override
   public byte[] sign(HashedLinkedData hashedLinkedData, IPrivateKey privateKey)

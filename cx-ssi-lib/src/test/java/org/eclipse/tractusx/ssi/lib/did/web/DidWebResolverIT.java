@@ -62,7 +62,8 @@ public class DidWebResolverIT {
     Did validDidWeb =
         new Did(
             new DidMethod("web"),
-            new DidMethodIdentifier(nginx.getHost() + "%3A" + nginx.getFirstMappedPort()));
+            new DidMethodIdentifier(nginx.getHost() + "%3A" + nginx.getFirstMappedPort()),
+            null);
     assertTrue(resolver.isResolvable(validDidWeb));
     DidDocument actualDidDoc = resolver.resolve(validDidWeb);
     assertEquals(new DidDocument(TestResourceUtil.getPublishedDidDocument()), actualDidDoc);
@@ -71,7 +72,7 @@ public class DidWebResolverIT {
   @Test
   public void shouldResolveValidExternalWebDid() throws DidResolverException {
     final String didIdentifier = "did.actor:alice";
-    Did validDidWeb = new Did(new DidMethod("web"), new DidMethodIdentifier(didIdentifier));
+    Did validDidWeb = new Did(new DidMethod("web"), new DidMethodIdentifier(didIdentifier), null);
     assertTrue(httpsResolver.isResolvable(validDidWeb));
     DidDocument actualDidDoc = httpsResolver.resolve(validDidWeb);
     assertEquals("did:web:" + didIdentifier, actualDidDoc.get("id"));

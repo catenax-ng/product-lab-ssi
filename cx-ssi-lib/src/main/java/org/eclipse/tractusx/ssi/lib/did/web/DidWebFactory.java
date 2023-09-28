@@ -53,6 +53,6 @@ public class DidWebFactory {
         new DidMethodIdentifier(
             hostName.concat(cleanedPath).replaceAll(":", "%3A").replaceAll("/", ":"));
 
-    return new Did(didMethod, methodIdentifier);
+    return new Did(didMethod, methodIdentifier, null);
   }
 }

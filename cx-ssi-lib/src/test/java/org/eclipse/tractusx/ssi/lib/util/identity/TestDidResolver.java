@@ -36,8 +36,9 @@ public class TestDidResolver implements DidResolver {
 
   @Override
   public DidDocument resolve(Did did) {
-
-    if (!documents.containsKey(did))
+    // We don't need fragment when we are searching for DID document ID.
+    Did didWithoutFragment = did.excludeFragment();
+    if (!documents.containsKey(didWithoutFragment))
       throw new RuntimeException(
           String.format(
               "Did not found: %s. Got [%s]",
@@ -46,7 +47,7 @@ public class TestDidResolver implements DidResolver {
                   .map(DidDocument::toString)
                   .collect(Collectors.joining(", "))));
 
-    return documents.get(did);
+    return documents.get(didWithoutFragment);
   }
 
   public void register(TestIdentity testIdentity) {

@@ -27,8 +27,8 @@ import org.eclipse.tractusx.ssi.lib.exception.InvalidePrivateKeyFormat;
 import org.eclipse.tractusx.ssi.lib.exception.InvalidePublicKeyFormat;
 import org.eclipse.tractusx.ssi.lib.exception.KeyGenerationException;
 import org.eclipse.tractusx.ssi.lib.proof.hash.HashedLinkedData;
-import org.eclipse.tractusx.ssi.lib.proof.types.ed25519.ED21559ProofSigner;
-import org.eclipse.tractusx.ssi.lib.proof.types.ed25519.ED25519ProofVerifier;
+import org.eclipse.tractusx.ssi.lib.proof.types.ed25519.Ed25519ProofSigner;
+import org.eclipse.tractusx.ssi.lib.proof.types.ed25519.Ed25519ProofVerifier;
 import org.eclipse.tractusx.ssi.lib.proof.types.jws.JWSProofSigner;
 import org.eclipse.tractusx.ssi.lib.proof.types.jws.JWSProofVerifier;
 import org.eclipse.tractusx.ssi.lib.util.identity.TestDidResolver;
@@ -49,8 +49,8 @@ public class SignAndVerifyTest {
     didResolver.register(testIdentity);
 
     var data = "Hello World".getBytes();
-    var signer = new ED21559ProofSigner();
-    var verifier = new ED25519ProofVerifier(didResolver);
+    var signer = new Ed25519ProofSigner();
+    var verifier = new Ed25519ProofVerifier(didResolver);
 
     var signature = signer.sign(new HashedLinkedData(data), testIdentity.getPrivateKey());
     var isSigned =
@@ -63,6 +63,7 @@ public class SignAndVerifyTest {
   public void testSignAndVerify_JWS()
       throws IOException, JOSEException, NoSuchAlgorithmException, InvalidePrivateKeyFormat,
           InvalidePublicKeyFormat, KeyGenerationException {
+
     final TestDidResolver didResolver = new TestDidResolver();
     var testIdentity = TestIdentityFactory.newIdentityWithED25519Keys();
 

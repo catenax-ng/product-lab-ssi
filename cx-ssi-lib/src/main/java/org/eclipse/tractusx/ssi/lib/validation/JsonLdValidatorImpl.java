@@ -31,7 +31,7 @@ import jakarta.json.JsonValue;
 import java.util.Map;
 import org.eclipse.tractusx.ssi.lib.exception.InvalidJsonLdException;
 import org.eclipse.tractusx.ssi.lib.model.JsonLdObject;
-import org.eclipse.tractusx.ssi.lib.web.RemoteDocumentLoader;
+import org.eclipse.tractusx.ssi.lib.model.RemoteDocumentLoader;
 import org.eclipse.tractusx.ssi.lib.model.verifiable.credential.VerifiableCredential;
 import org.eclipse.tractusx.ssi.lib.model.verifiable.presentation.VerifiablePresentation;
 

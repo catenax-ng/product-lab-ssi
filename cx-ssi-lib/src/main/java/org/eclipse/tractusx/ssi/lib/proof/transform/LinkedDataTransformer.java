@@ -35,7 +35,7 @@ import java.io.StringWriter;
 import java.security.NoSuchAlgorithmException;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.SerializationUtils;
-import org.eclipse.tractusx.ssi.lib.web.RemoteDocumentLoader;
+import org.eclipse.tractusx.ssi.lib.model.RemoteDocumentLoader;
 import org.eclipse.tractusx.ssi.lib.model.JsonLdObject;
 import org.eclipse.tractusx.ssi.lib.model.verifiable.Verifiable;
 

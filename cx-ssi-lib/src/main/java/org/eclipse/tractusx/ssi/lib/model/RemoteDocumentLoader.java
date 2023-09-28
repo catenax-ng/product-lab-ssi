@@ -1,4 +1,4 @@
-package org.eclipse.tractusx.ssi.lib.web;
+package org.eclipse.tractusx.ssi.lib.model;
 
 import com.apicatalog.jsonld.JsonLdError;
 import com.apicatalog.jsonld.document.Document;

@@ -109,9 +109,9 @@ public class VerifiableCredentialBuilder {
     map.put(VerifiableCredential.ISSUANCE_DATE, formatter.format(issuanceDate));
     map.put(VerifiableCredential.EXPIRATION_DATE, formatter.format(expirationDate));
     map.put(VerifiableCredential.CREDENTIAL_SUBJECT, credentialSubject);
-    if (!Objects.isNull(credentialStatus)) {
-      map.put(VerifiableCredential.CREDENTIAL_STATUS, credentialStatus);
-    }
+    // if (!Objects.isNull(credentialStatus)) {
+    //   map.put(VerifiableCredential.CREDENTIAL_STATUS, credentialStatus);
+    // }
     if (proof != null) {
       map.put(VerifiableCredential.PROOF, proof);
     }

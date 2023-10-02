@@ -30,6 +30,7 @@ import jakarta.json.JsonObject;
 import jakarta.json.JsonValue;
 import java.util.Map;
 import org.eclipse.tractusx.ssi.lib.model.JsonLdObject;
+import org.eclipse.tractusx.ssi.lib.model.RemoteDocumentLoader;
 
 public class JsonLdValidatorImpl implements JsonLdValidator {
 
@@ -63,20 +64,25 @@ public class JsonLdValidatorImpl implements JsonLdValidator {
     try {
 
       JsonObject expandContext =
-          Json.createObjectBuilder().add("@vocab", Json.createValue(UNDEFINED_TERM_URI)).build();
+         Json.createObjectBuilder().add("@vocab", Json.createValue(UNDEFINED_TERM_URI))
+      .build();
 
       JsonDocument jsonDocument = JsonDocument.of(MediaType.JSON_LD, jsonLdObject.toJsonObject());
+    
+      var documentLoader = new RemoteDocumentLoader();
+      documentLoader.setEnableHttps(true);
+      documentLoader.setHttpsContexts(jsonLdObject.getContext());
 
       JsonLdOptions jsonLdOptions = new JsonLdOptions();
-      jsonLdOptions.setDocumentLoader(jsonLdObject.getDocumentLoader());
+      jsonLdOptions.setDocumentLoader(documentLoader);
       jsonLdOptions.setExpandContext(expandContext);
-
-      JsonArray jsonArray = ExpansionProcessor.expand(jsonDocument, jsonLdOptions, false);
+      
+      JsonArray jsonArray = ExpansionProcessor.expand(jsonDocument, jsonLdOptions, true);
       JsonObject jsonObject = jsonArray.getJsonObject(0);
 
       findUndefinedTerms(jsonObject);
-    } catch (JsonLdError ex) {
 
+    } catch (JsonLdError ex) {
       throw new RuntimeException(ex.getMessage(), ex);
     }
   }

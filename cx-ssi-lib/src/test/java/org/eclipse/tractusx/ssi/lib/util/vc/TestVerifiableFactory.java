@@ -3,6 +3,7 @@ package org.eclipse.tractusx.ssi.lib.util.vc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.SneakyThrows;
@@ -18,14 +19,24 @@ import org.eclipse.tractusx.ssi.lib.model.verifiable.presentation.VerifiablePres
 import org.eclipse.tractusx.ssi.lib.util.identity.TestIdentity;
 
 public class TestVerifiableFactory {
+  static List<URI> contextList =
+        List.of(
+            URI.create("https://www.w3.org/2018/credentials/v1"),
+            URI.create(
+                "https://catenax-ng.github.io/product-core-schemas/businessPartnerData.json"),
+            URI.create("https://w3id.org/security/suites/jws-2020/v1"),
+            URI.create("https://w3id.org/security/suites/ed25519-2020/v1"));
 
   @SneakyThrows
   public static VerifiableCredential createVerifiableCredential(TestIdentity issuer, Proof proof) {
     final VerifiableCredentialBuilder verifiableCredentialBuilder =
         new VerifiableCredentialBuilder();
 
+  
+
+    
     VerifiableCredentialSubject verifiableCredentialSubject =
-        new VerifiableCredentialSubject(Map.of("foo", "bar"));
+        new VerifiableCredentialSubject(Map.of("MembershipCredential",Map.of("holderIdentifier", "BPNSWVKGWCP7PDQR")));
 
     // add VC status
     String validStatus =
@@ -39,18 +50,20 @@ public class TestVerifiableFactory {
 
     ObjectMapper objectMapper = new ObjectMapper();
     Map<String, Object> statusMap = objectMapper.readValue(validStatus, Map.class);
-    VerifiableCredentialStatusList2021Entry verifiableCredentialStatusList2021Entry =
-        new VerifiableCredentialStatusList2021Entry(statusMap);
-
+    
+    // VerifiableCredentialStatusList2021Entry verifiableCredentialStatusList2021Entry =
+    //     new VerifiableCredentialStatusList2021Entry(null);
+     
     return verifiableCredentialBuilder
         .id(URI.create("did:test:id"))
+        .context(contextList)
         .type(List.of(VerifiableCredentialType.VERIFIABLE_CREDENTIAL))
         .issuer(issuer.getDid().toUri())
         .expirationDate(Instant.parse("2025-02-15T17:21:42Z").plusSeconds(3600))
         .issuanceDate(Instant.parse("2023-02-15T17:21:42Z"))
         .proof(proof)
         .credentialSubject(verifiableCredentialSubject)
-        .verifiableCredentialStatus(verifiableCredentialStatusList2021Entry)
+        .verifiableCredentialStatus(null)
         .build();
   }
 
@@ -62,6 +75,7 @@ public class TestVerifiableFactory {
 
     return verifiableCredentialBuilder
         .id(URI.create("did:test:id"))
+        .context(contextList)
         .type(List.of(VerifiablePresentationType.VERIFIABLE_PRESENTATION))
         .verifiableCredentials(vcs)
         .proof(proof)
@@ -74,13 +88,14 @@ public class TestVerifiableFactory {
 
     return verifiableCredentialBuilder
         .id(verifiableCredential.getId())
+        .context(verifiableCredential.getContext())
         .type(verifiableCredential.getTypes())
         .issuer(verifiableCredential.getIssuer())
         .expirationDate(verifiableCredential.getExpirationDate())
         .issuanceDate(verifiableCredential.getIssuanceDate())
         .proof(proof)
         .credentialSubject(verifiableCredential.getCredentialSubject())
-        .verifiableCredentialStatus(verifiableCredential.getVerifiableCredentialStatus())
+        .verifiableCredentialStatus(null)
         .build();
   }
 
@@ -92,6 +107,7 @@ public class TestVerifiableFactory {
 
     return verifiablePresentationBuilder
         .id(URI.create("did:test:id"))
+        .context(verifiablePresentation.getContext())
         .type(List.of(VerifiablePresentationType.VERIFIABLE_PRESENTATION))
         .verifiableCredentials(verifiablePresentation.getVerifiableCredentials())
         .proof(proof)

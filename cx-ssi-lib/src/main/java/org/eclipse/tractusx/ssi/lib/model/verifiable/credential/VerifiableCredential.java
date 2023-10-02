@@ -57,6 +57,16 @@ public class VerifiableCredential extends Verifiable {
   public static final String CREDENTIAL_SUBJECT = "credentialSubject";
   public static final String CREDENTIAL_STATUS = "credentialStatus";
 
+  public static final String CREDENTIAL_SCHEMA = "credentialSchema";
+
+  public static final String REFERENCE_NUMBER = "referenceNumber";
+
+  public static final String EVIDENCE = "evidence";
+
+  public static final String TERMS_OF_USE = "termsOfUse";
+
+  public static final String REFRESH_SERVICE = "refreshService";
+
   @JsonCreator
   public VerifiableCredential(Map<String, Object> json) {
     super(json, VerifiableType.VC);
@@ -82,6 +92,16 @@ public class VerifiableCredential extends Verifiable {
     }
 
     // validate status list if provided
+  }
+
+  @NonNull
+  public URI getId() {
+    return SerializeUtil.asURI(get(ID));
+  }
+
+  @NonNull
+  public List<String> getTypes() {
+    return SerializeUtil.asStringList(get(TYPE));
   }
 
   @NonNull

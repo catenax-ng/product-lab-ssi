@@ -27,7 +27,7 @@ maven/mavencentral/commons-validator/commons-validator/1.7, Apache-2.0, approved
 maven/mavencentral/io.grpc/grpc-context/1.27.2, Apache-2.0, approved, clearlydefined
 maven/mavencentral/io.opencensus/opencensus-api/0.31.1, Apache-2.0, approved, clearlydefined
 maven/mavencentral/io.opencensus/opencensus-contrib-http-util/0.31.1, Apache-2.0, approved, clearlydefined
-maven/mavencentral/io.setl/rdf-urdna/1.2, , restricted, clearlydefined
+maven/mavencentral/io.setl/rdf-urdna/1.2, Apache-2.0, approved, clearlydefined
 maven/mavencentral/jakarta.json/jakarta.json-api/2.1.2, EPL-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0, approved, #7907
 maven/mavencentral/joda-time/joda-time/2.12.5, Apache-2.0, approved, clearlydefined
 maven/mavencentral/net.i2p.crypto/eddsa/0.3.0, CC0-1.0, approved, CQ22537

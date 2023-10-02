@@ -64,11 +64,10 @@ public class JsonLdValidatorImpl implements JsonLdValidator {
     try {
 
       JsonObject expandContext =
-         Json.createObjectBuilder().add("@vocab", Json.createValue(UNDEFINED_TERM_URI))
-      .build();
+          Json.createObjectBuilder().add("@vocab", Json.createValue(UNDEFINED_TERM_URI)).build();
 
       JsonDocument jsonDocument = JsonDocument.of(MediaType.JSON_LD, jsonLdObject.toJsonObject());
-    
+
       var documentLoader = new RemoteDocumentLoader();
       documentLoader.setEnableHttps(true);
       documentLoader.setHttpsContexts(jsonLdObject.getContext());
@@ -76,7 +75,7 @@ public class JsonLdValidatorImpl implements JsonLdValidator {
       JsonLdOptions jsonLdOptions = new JsonLdOptions();
       jsonLdOptions.setDocumentLoader(documentLoader);
       jsonLdOptions.setExpandContext(expandContext);
-      
+
       JsonArray jsonArray = ExpansionProcessor.expand(jsonDocument, jsonLdOptions, true);
       JsonObject jsonObject = jsonArray.getJsonObject(0);
 

@@ -67,7 +67,7 @@ public class LinkedDataProofValidation {
     IVerifier verifier = null;
 
     var type = verifiable.getProof().getType();
-    
+
     if (type != null && !type.isBlank()) {
       if (type.equals(SignatureType.ED21559.toString()))
         verifier = new Ed25519ProofVerifier(this.didResolver);

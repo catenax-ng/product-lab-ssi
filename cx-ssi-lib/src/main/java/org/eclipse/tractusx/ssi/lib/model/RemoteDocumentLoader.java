@@ -9,7 +9,9 @@ import com.apicatalog.jsonld.loader.DocumentLoaderOptions;
 import com.apicatalog.jsonld.loader.FileLoader;
 import com.apicatalog.jsonld.loader.HttpLoader;
 import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import java.net.URI;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +24,6 @@ public class RemoteDocumentLoader implements DocumentLoader {
 
   private static DocumentLoader DEFAULT_HTTP_LOADER;
   private static DocumentLoader DEFAULT_FILE_LOADER;
-
   @Getter private DocumentLoader httpLoader;
   @Getter private DocumentLoader fileLoader;
 
@@ -31,7 +32,12 @@ public class RemoteDocumentLoader implements DocumentLoader {
   @Getter @Setter private boolean enableHttps = false;
   @Getter @Setter private boolean enableFile = false;
   @Getter @Setter private Map<URI, JsonDocument> localCache = new HashMap<URI, JsonDocument>();
-  @Getter @Setter private Cache<URI, Document> remoteCache = null;
+
+  @Getter @Setter
+  private Cache<URI, Document> remoteCache =
+      Caffeine.newBuilder().expireAfterWrite(Duration.ofDays(1)).build();
+
+  ;
   @Getter @Setter private List<URI> httpContexts = new ArrayList<URI>();
   @Getter @Setter private List<URI> httpsContexts = new ArrayList<URI>();
   @Getter @Setter private List<URI> fileContexts = new ArrayList<URI>();
@@ -78,6 +84,7 @@ public class RemoteDocumentLoader implements DocumentLoader {
     if (this.isEnableLocalCache() && this.getLocalCache().containsKey(url)) {
       return this.getLocalCache().get(url);
     }
+
     if (this.isEnableHttp() && "http".equalsIgnoreCase(url.getScheme())) {
 
       DocumentLoader httpLoader = this.getHttpLoader();
@@ -100,8 +107,10 @@ public class RemoteDocumentLoader implements DocumentLoader {
         document = httpLoader.loadDocument(url, options);
         if (this.getRemoteCache() != null) this.getRemoteCache().put(url, document);
       }
+
       return document;
     }
+
     if (this.isEnableFile() && "file".equalsIgnoreCase(url.getScheme())) {
 
       DocumentLoader fileLoader = this.getFileLoader();

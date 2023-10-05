@@ -68,7 +68,7 @@ public class JsonLdValidatorImpl implements JsonLdValidator {
 
       JsonDocument jsonDocument = JsonDocument.of(MediaType.JSON_LD, jsonLdObject.toJsonObject());
 
-      var documentLoader = new RemoteDocumentLoader();
+      var documentLoader = RemoteDocumentLoader.getInstance();
       documentLoader.setEnableHttps(true);
       documentLoader.setHttpsContexts(jsonLdObject.getContext());
 

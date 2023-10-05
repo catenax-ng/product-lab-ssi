@@ -70,7 +70,8 @@ public class LinkedDataTransformer {
 
   private RdfDataset toDataset(JsonLdObject jsonLdObject) throws RuntimeException {
 
-    var documentLoader = new RemoteDocumentLoader();
+    var documentLoader = RemoteDocumentLoader.getInstance();
+
     documentLoader.setEnableHttps(true);
     documentLoader.setHttpsContexts(jsonLdObject.getContext());
 
@@ -81,6 +82,7 @@ public class LinkedDataTransformer {
     JsonDocument jsonDocument = JsonDocument.of(MediaType.JSON_LD, jsonLdObject.toJsonObject());
     ToRdfApi toRdfApi = JsonLd.toRdf(jsonDocument);
     toRdfApi.options(options);
+
     try {
       return toRdfApi.get();
     } catch (JsonLdError ex) {

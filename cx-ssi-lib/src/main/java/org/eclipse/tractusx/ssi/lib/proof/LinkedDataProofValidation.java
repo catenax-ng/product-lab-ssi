@@ -33,6 +33,8 @@ import org.eclipse.tractusx.ssi.lib.proof.transform.LinkedDataTransformer;
 import org.eclipse.tractusx.ssi.lib.proof.transform.TransformedLinkedData;
 import org.eclipse.tractusx.ssi.lib.proof.types.ed25519.Ed25519ProofVerifier;
 import org.eclipse.tractusx.ssi.lib.proof.types.jws.JWSProofVerifier;
+import org.eclipse.tractusx.ssi.lib.serialization.jsonLd.JsonLdValidator;
+import org.eclipse.tractusx.ssi.lib.serialization.jsonLd.JsonLdValidatorImpl;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class LinkedDataProofValidation {
@@ -44,13 +46,16 @@ public class LinkedDataProofValidation {
     }
 
     return new LinkedDataProofValidation(
-        new LinkedDataHasher(), new LinkedDataTransformer(), didResolver);
+        new LinkedDataHasher(),
+        new LinkedDataTransformer(),
+        didResolver,
+        new JsonLdValidatorImpl());
   }
 
   private final LinkedDataHasher hasher;
   private final LinkedDataTransformer transformer;
   private final DidResolver didResolver;
-
+  private final JsonLdValidator jsonLdValidator;
   /**
    * To verifiy {@link VerifiableCredential} or {@link VerifiablePresentation} In this method we are
    * depending on Verification Method to resolve the DID Document and fetching the required Public
@@ -58,9 +63,10 @@ public class LinkedDataProofValidation {
    */
   @SneakyThrows
   public boolean verifiy(Verifiable verifiable) {
+    boolean isVerified = false;
+    IVerifier verifier = null;
 
     var type = verifiable.getProof().getType();
-    IVerifier verifier = null;
 
     if (type != null && !type.isBlank()) {
       if (type.equals(SignatureType.ED21559.toString()))
@@ -77,6 +83,9 @@ public class LinkedDataProofValidation {
     final TransformedLinkedData transformedData = transformer.transform(verifiable);
     final HashedLinkedData hashedData = hasher.hash(transformedData);
 
-    return verifier.verify(hashedData, verifiable);
+    isVerified = jsonLdValidator.validate(verifiable);
+    isVerified = verifier.verify(hashedData, verifiable);
+
+    return isVerified;
   }
 }

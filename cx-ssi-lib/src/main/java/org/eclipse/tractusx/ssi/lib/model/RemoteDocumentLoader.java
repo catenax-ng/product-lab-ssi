@@ -9,7 +9,9 @@ import com.apicatalog.jsonld.loader.DocumentLoaderOptions;
 import com.apicatalog.jsonld.loader.FileLoader;
 import com.apicatalog.jsonld.loader.HttpLoader;
 import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import java.net.URI;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,12 +32,17 @@ public class RemoteDocumentLoader implements DocumentLoader {
   @Getter @Setter private boolean enableHttps = false;
   @Getter @Setter private boolean enableFile = false;
   @Getter @Setter private Map<URI, JsonDocument> localCache = new HashMap<URI, JsonDocument>();
-  @Getter @Setter private Cache<URI, Document> remoteCache = null;
+
+  @Getter @Setter
+  private Cache<URI, Document> remoteCache =
+      Caffeine.newBuilder().expireAfterWrite(Duration.ofDays(1)).build();
+
+  ;
   @Getter @Setter private List<URI> httpContexts = new ArrayList<URI>();
   @Getter @Setter private List<URI> httpsContexts = new ArrayList<URI>();
   @Getter @Setter private List<URI> fileContexts = new ArrayList<URI>();
 
-  public static final DocumentLoader DOCUMENT_LOADER;
+  private static final RemoteDocumentLoader DOCUMENT_LOADER;
 
   static {
     DOCUMENT_LOADER = new RemoteDocumentLoader();
@@ -60,12 +67,16 @@ public class RemoteDocumentLoader implements DocumentLoader {
     DEFAULT_FILE_LOADER = defaultFileLoader;
   }
 
-  public RemoteDocumentLoader() {}
+  private RemoteDocumentLoader() {}
 
-  public RemoteDocumentLoader(Map<URI, JsonDocument> localCache) {
-    if (localCache == null) throw new NullPointerException();
-    this.localCache = localCache;
+  public static synchronized RemoteDocumentLoader getInstance() {
+    return DOCUMENT_LOADER;
   }
+
+  // public RemoteDocumentLoader(Map<URI, JsonDocument> localCache) {
+  //   if (localCache == null) throw new NullPointerException();
+  //   this.localCache = localCache;
+  // }
 
   @Override
   public Document loadDocument(URI url, DocumentLoaderOptions options) throws JsonLdError {
@@ -73,6 +84,7 @@ public class RemoteDocumentLoader implements DocumentLoader {
     if (this.isEnableLocalCache() && this.getLocalCache().containsKey(url)) {
       return this.getLocalCache().get(url);
     }
+
     if (this.isEnableHttp() && "http".equalsIgnoreCase(url.getScheme())) {
 
       DocumentLoader httpLoader = this.getHttpLoader();
@@ -95,8 +107,10 @@ public class RemoteDocumentLoader implements DocumentLoader {
         document = httpLoader.loadDocument(url, options);
         if (this.getRemoteCache() != null) this.getRemoteCache().put(url, document);
       }
+
       return document;
     }
+
     if (this.isEnableFile() && "file".equalsIgnoreCase(url.getScheme())) {
 
       DocumentLoader fileLoader = this.getFileLoader();

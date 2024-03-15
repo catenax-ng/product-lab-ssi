@@ -31,7 +31,7 @@
         <org-sl4j.version>2.0.7</org-sl4j.version>
         <org.eclipse.txdc.version>0.3.0</org.eclipse.txdc.version>
         <org.eclipse.edc.version>0.0.1-20230220-SNAPSHOT</org.eclipse.edc.version>
-        <com.nimbusds.version>9.31</com.nimbusds.version>
+        <com.nimbusds.version>9.37.2</com.nimbusds.version>
         <com.fasterxml.jackson.version>2.14.0-rc2</com.fasterxml.jackson.version>
         <jakarta.ws.rs.version>3.1.0</jakarta.ws.rs.version>
         <org.junit.version>5.9.2</org.junit.version>
